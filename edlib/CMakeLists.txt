@@ -1,0 +1,1 @@
+add_library(edlib "src/edlib.cpp")

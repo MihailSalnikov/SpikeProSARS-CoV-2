@@ -5,13 +5,19 @@ SpikePro algorithm predicts the fitness of a SARS-CoV-2 strain from the sequence
 
 To compile the c++ program type this command:
 
-c++ SpikePro.cpp edlib/src/edlib.cpp CSVparser.cpp -o SpikePro -I edlib/include/ -std=c++11
+```sh
+mkdir build && cd build && cmake .. && make
+```
 
 To run the code and predict the fitness of a viral strain 
 
-./SpikePro TEST.fasta go
+```sh
+./build/SpikePro TEST.fasta go
+```
 
-where TEST.fasta is the sequence of the considered variant of the SARS-CoV-2 spike protein in fasta format.  
+where TEST.fasta is the sequence of the considered variant of the SARS-CoV-2 spike protein in fasta format. 
+
+Programm will write fitness to TEST.fasta.fitness.txt for provided sequence.
 
 
 ## List of files in this directory

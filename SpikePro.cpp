@@ -15,6 +15,7 @@
 #include <algorithm>
 #include "CSVparser.hpp"
 #include <map>
+#include <fstream>
 using namespace std;
 
 
@@ -23,7 +24,8 @@ int readFastaSequences(const char* path, vector< vector<char> >* seqs);
 
 void printAlignment(const char* query, const char* target,
                     const unsigned char* alignment, const int alignmentLength,
-                    const int position, const EdlibAlignMode modeCode);
+                    const int position, const EdlibAlignMode modeCode,
+                    const char* queriesFilepath);
 
 
 int addition (char a, char b);
@@ -201,7 +203,7 @@ int main(int argc, char * const argv[]) {
                 printf("\n");
 	      	if (!strcmp(alignmentFormat, "NICE")) {
                     printAlignment(query, target, alignment, alignmentLength,
-                                   *(endLocations[i]),  modeCode);
+                                   *(endLocations[i]),  modeCode, queriesFilepath);
                 } else {
                     printf("Cigar:\n");
                     EdlibCigarFormat cigarFormat = !strcmp(alignmentFormat, "CIG_STD") ?
@@ -339,7 +341,8 @@ int readFastaSequences(const char* path, vector< vector<char> >* seqs) {
 
 void printAlignment(const char* query, const char* target,
                     const unsigned char* alignment, const int alignmentLength,
-                    const int position, const EdlibAlignMode modeCode) {
+                    const int position, const EdlibAlignMode modeCode,
+                    const char* queriesFilepath) {
     int tIdx = -1;
     int qIdx = -1;
     int uprim =0;
@@ -484,7 +487,15 @@ void printAlignment(const char* query, const char* target,
 
       //  for (int f = 0; f< nofvar;f++){FIT_TOT=FIT_TOT*Fitness[f]};	
      
-       printf("\nSpike protein predicted fitness: \u03A6 = %.2f\n \n", fitness);
+    printf("\nSpike protein predicted fitness: \u03A6 = %.2f\n \n", fitness);
+
+    string filename = queriesFilepath;
+    filename = filename + ".fitness.txt";
+
+    std::cout << filename;
+
+    ofstream out(filename);
+    out << fitness;
 
      //    for (int y=0;y<1273;y++)
      //	       printf("%d and %c\n", uso, query[y]);
